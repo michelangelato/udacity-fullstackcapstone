@@ -32,8 +32,6 @@ def create_app(test_config=None):
     @app.route('/actors', methods=['GET'])
     @requires_auth('get:actors')
     def get_actors():
-        print('GET /actors')
-        
         try:
             # get results from db
             actors = Actor.query.order_by(Actor.id).all()
@@ -173,7 +171,6 @@ def create_app(test_config=None):
     @app.route('/movies', methods=['GET'])
     @requires_auth('get:movies')
     def get_movies():
-        print('GET /movies')
         try:
             # get results from db
             movies = Movie.query.order_by(Movie.id).all()

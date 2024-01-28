@@ -4,19 +4,42 @@ A Flask API project to manage a casting agency movies and actors.
 
 It exposes endpoints to perform CRUD operations over actors and movies of the Agency based on role of the user that requests the resource.
 
+Website URL:
+
+https://udacity-fullstack-capstone-ef56c3f3fb4c.herokuapp.com
+
+## Roles and Credentials
+
 Users can get the JWT for authentication via a Auth0 API.
 The URL for authenticate and get the JWT is this:
 
 [URL for authentication with Auth0](https://michelangelomarani.eu.auth0.com/authorize?response_type=token&client_id=xZ0hNhLgnpfQ9p68hMKHVI3BsSmBSxIU&redirect_uri=http://127.0.0.1:5000/profile&audience=cinema)
 
 Roles are the following:
-* Casting Assistant (can view actors and movies)
-* Casting Director (as previous, plus can add/delete an actor and modify actors or movies)
-* Executive Producer (as previous, plus can add/delete a movie)
 
-Website URL:
+### Casting Assistant
 
-https://udacity-fullstack-capstone-ef56c3f3fb4c.herokuapp.com
+Can view actors and movies
+
+username: castingassistant@mailinator.com
+
+password: casting123$
+
+### Casting Director
+
+As previous, plus can add/delete an actor and modify actors or movies.
+
+username: castingdirector@mailinator.com
+
+password: casting123$
+
+### Executive Producer
+
+As previous, plus can add/delete a movie.
+
+username: executiveproducer@mailinator.com
+
+password: casting123$
 
 ## Setting Up Local Environment
 
