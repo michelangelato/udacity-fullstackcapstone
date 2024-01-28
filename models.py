@@ -1,5 +1,5 @@
 import os
-from sqlalchemy import Column, String, create_engine
+from sqlalchemy import Column, Integer, String, Date, create_engine
 from flask_sqlalchemy import SQLAlchemy
 import json
 
@@ -14,30 +14,113 @@ setup_db(app)
     binds a flask application and a SQLAlchemy service
 '''
 def setup_db(app, database_path=database_path):
-    app.config["SQLALCHEMY_DATABASE_URI"] = database_path
-    app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-    db.app = app
-    db.init_app(app)
-    db.create_all()
+  app.config["SQLALCHEMY_DATABASE_URI"] = database_path
+  app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
+  db.app = app
+  db.init_app(app)
+  db.create_all()
 
 
 '''
-Person
-Have title and release year
+"recitations" Table
 '''
-class Person(db.Model):  
-  __tablename__ = 'People'
+recitations = db.Table(
+    'recitations',
+    db.Column('movie_id', db.Integer, db.ForeignKey('movies.id')),
+    db.Column('actor_id', db.Integer, db.ForeignKey('actors.id'))
+)
+
+
+'''
+"actors" Table
+'''
+class Actor(db.Model):  
+  __tablename__ = 'actors'
 
   id = Column(db.Integer, primary_key=True)
-  name = Column(String)
-  catchphrase = Column(String)
+  firstname = Column(String)
+  lastname = Column(String)
+  stagename = Column(String)
+  gender = Column(String)
+  birthdate = Column(Date)
+  movies = db.relationship(
+    'Movie',
+    secondary=recitations,
+    back_populates='actors'
+  )
 
-  def __init__(self, name, catchphrase=""):
-    self.name = name
+  def __init__(
+    self,
+    firstname,
+    lastname,
+    birthdate,
+    gender="unknow",
+    stagename="",
+    catchphrase=""):
+    self.fistname = firstname
+    self.lastname = lastname
+    self.birthdate = birthdate
+    self.gender = gender
+    self.stagename = stagename
     self.catchphrase = catchphrase
+
+  def insert(self):
+    db.session.add(self)
+    db.session.commit()
+
+  def update(self):
+    db.session.commit()
+
+  def delete(self):
+    db.session.delete(self)
+    db.session.commit()
 
   def format(self):
     return {
       'id': self.id,
-      'name': self.name,
-      'catchphrase': self.catchphrase}
+      'firstname': self.firstname,
+      'lastname': self.lastname,
+      'stagename': self.stagename,
+      'gender': self.gender,
+      'catchphrase': self.catchphrase
+    }
+
+'''
+"movies" Table
+'''
+class Movie(db.Model):
+  __tablename__ = 'movies'
+
+  id = Column(Integer, primary_key=True)
+  title = Column(String)
+  genre = Column(String)
+  year = Column(Integer)
+  actors = db.relationship(
+    'Actor',
+    secondary=recitations,
+    back_populates='movies'
+  )
+
+  def __init__(self, title, genre, year):
+    self.title = title
+    self.genre = genre
+    self.year = year
+
+  def insert(self):
+    db.session.add(self)
+    db.session.commit()
+
+  def update(self):
+    db.session.commit()
+
+  def delete(self):
+    db.session.delete(self)
+    db.session.commit()
+
+  def format(self):
+    return {
+      'id': self.id,
+      'title': self.title,
+      'genre': self.genre,
+      'year': self.year
+    }

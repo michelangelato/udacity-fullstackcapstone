@@ -1,4 +1,6 @@
 #!/bin/bash
-export DATABASE_URL="postgresql://postgres@localhost:5432/postgres"
+export DATABASE_URL="postgresql://postgres@localhost:5432/cinema"
 export EXCITED="true"
-echo "setup.sh script executed successfully!"
+echo "env variable setted executed successfully!"
+createdb cinema
+echo "database created successfully!"
