@@ -273,6 +273,10 @@ python app.py
 
 ---
 
+## Tests
+
+Import on Postman the file `udacity-cinema.postman_collection.json` to test all endpoints with different profiles.
+
 ## Flask Migrations
 
 * init database
