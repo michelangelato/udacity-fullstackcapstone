@@ -54,15 +54,14 @@ class Actor(db.Model):
     firstname,
     lastname,
     birthdate,
-    gender="unknow",
-    stagename="",
-    catchphrase=""):
-    self.fistname = firstname
+    gender="unknown",
+    stagename=""
+  ):
+    self.firstname = firstname
     self.lastname = lastname
     self.birthdate = birthdate
     self.gender = gender
     self.stagename = stagename
-    self.catchphrase = catchphrase
 
   def insert(self):
     db.session.add(self)
@@ -75,14 +74,21 @@ class Actor(db.Model):
     db.session.delete(self)
     db.session.commit()
 
-  def format(self):
+  def short(self):
+    return {
+      'id': self.id,
+      'firstname': self.firstname,
+      'lastname': self.lastname,
+      'stagename': self.stagename
+    }
+  def long(self):
     return {
       'id': self.id,
       'firstname': self.firstname,
       'lastname': self.lastname,
       'stagename': self.stagename,
       'gender': self.gender,
-      'catchphrase': self.catchphrase
+      'birthdate': self.birthdate
     }
 
 '''
@@ -119,7 +125,14 @@ class Movie(db.Model):
     db.session.delete(self)
     db.session.commit()
 
-  def format(self):
+  def short(self):
+    return {
+      'id': self.id,
+      'title': self.title,
+      'year': self.year
+    }
+  
+  def long(self):
     return {
       'id': self.id,
       'title': self.title,
