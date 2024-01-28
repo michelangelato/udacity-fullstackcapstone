@@ -49,8 +49,229 @@ python app.py
 
 ## APIs
 
-@TODO
+`GET '/actors'`
 
+- Fetches the list of actors.
+- Returns: An object with `actors` with minimal details, the `total` number of results and `success`.
+
+```json
+{
+    "actors": [
+        {
+            "firstname": "Maela",
+            "id": 2,
+            "lastname": "Shivangani",
+            "stagename": "White Lotus"
+        },
+        ...
+    ],
+    "success": true,
+    "total": 2
+}
+```
+
+---
+
+`GET '/actors/<int:author_id>'`
+
+- Get a single author by ID.
+- Request Arguments: you have to pass "author_id" parameter
+- Returns: An object with `actor` with full details and `success`.
+
+```json
+{
+    "actor": {
+        "birthdate": "Mon, 03 Apr 2000 00:00:00 GMT",
+        "firstname": "Maela",
+        "gender": "female",
+        "id": 2,
+        "lastname": "Shivangani",
+        "stagename": "White Lotus"
+    },
+    "success": true
+}
+```
+
+---
+
+`POST '/actors'`
+
+- Add a new actor
+- Request Body:
+
+```json
+{
+    "firstname": "Maela",
+    "lastname": "Shivangani",
+    "stagename": "Shiva",
+    "gender": "female",
+    "birthdate": "2000-04-03"
+}
+```
+
+- Returns: `created` with the id of the new actor,
+
+```json
+{
+    "created": 3
+}
+```
+
+---
+
+`PATCH '/actors/<int:actor_id>'`
+
+- Update a single actor by ID.
+- Request Arguments: you have to pass "author_id" by query parameter and the following body:
+
+```json
+{
+    "stagename": "White Lotus",
+    "gender": "female"
+}
+```
+
+- Returns: An object with `actor` with full details and `success`.
+
+```json
+{
+    "actor": {
+        "birthdate": "Mon, 03 Apr 2000 00:00:00 GMT",
+        "firstname": "Maela",
+        "gender": "female",
+        "id": 2,
+        "lastname": "Shivangani",
+        "stagename": "White Lotus"
+    },
+    "success": true
+}
+```
+
+---
+
+`DELETE '/actors/<int:actor_id>'`
+
+- Deletes a specified actor by ID
+- Request Arguments: `actor_id` - integer
+- Returns: It returns the id of the deleted actor.
+
+```json
+{
+  "deleted": 4
+}
+```
+
+---
+
+`GET '/movies'`
+
+- Fetches the list of movies.
+- Returns: An object with `movies` with minimal details, the `total` number of results and `success`.
+
+```json
+{
+    "movies": [
+        {
+            "id": 1,
+            "title": "Orange Juice",
+            "year": 2024
+        },
+        ...
+    ],
+    "success": true,
+    "total": 2
+}
+```
+
+---
+
+`GET '/movies/<int:movie_id>'`
+
+- Get a single movie by ID.
+- Request Arguments: you have to pass "movie_id" parameter
+- Returns: An object with `movie` with full details and `success`.
+
+```json
+{
+    "movie": {
+        "duration": 120,
+        "genre": "Comedy",
+        "id": 1,
+        "title": "Orange Juice",
+        "year": 2024
+    },
+    "success": true
+}
+```
+
+---
+
+`POST '/movies'`
+
+- Add a new movie
+- Request Body:
+
+```json
+{
+    "title": "Orange Juice 2",
+    "genre": "Comedy",
+    "year": 2024,
+    "duration": 120
+}
+```
+
+- Returns: `created` with the id of the new movie,
+
+```json
+{
+    "created": 2
+}
+```
+
+---
+
+`PATCH '/movies/<int:movie_id>'`
+
+- Update a single movie by ID.
+- Request Arguments: you have to pass "movie_id" by query parameter and the following body:
+
+```json
+{
+    "title": "Orange Juice",
+    "genre": "Drama"
+}
+```
+
+- Returns: An object with `movie` with full details and `success`.
+
+```json
+{
+    "movie": {
+        "duration": 120,
+        "genre": "\"Drama\"",
+        "id": 1,
+        "title": "Orange Juice",
+        "year": 2024
+    },
+    "success": true
+}
+```
+
+---
+
+`DELETE '/movies/<int:movie_id>'`
+
+- Deletes a specified movie by ID
+- Request Arguments: `movie_id` - integer
+- Returns: It returns the id of the deleted movie.
+
+```json
+{
+  "deleted": 1
+}
+```
+
+---
 
 ## Flask Migrations
 

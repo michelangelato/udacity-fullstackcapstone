@@ -18,7 +18,7 @@
             "args": [
                 "run",
                 "--no-debugger",
-                "--no-reload"
+                "--reload"
             ],
             "preLaunchTask": "venv-activate",
             "jinja": true,
