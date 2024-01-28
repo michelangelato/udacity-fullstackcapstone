@@ -95,16 +95,18 @@ class Movie(db.Model):
   title = Column(String)
   genre = Column(String)
   year = Column(Integer)
+  duration = Column(Integer)
   actors = db.relationship(
     'Actor',
     secondary=recitations,
     back_populates='movies'
   )
 
-  def __init__(self, title, genre, year):
+  def __init__(self, title, genre, year, duration):
     self.title = title
     self.genre = genre
     self.year = year
+    self.duration = duration
 
   def insert(self):
     db.session.add(self)
@@ -122,5 +124,6 @@ class Movie(db.Model):
       'id': self.id,
       'title': self.title,
       'genre': self.genre,
-      'year': self.year
+      'year': self.year,
+      'duration': self.duration
     }
