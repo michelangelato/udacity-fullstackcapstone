@@ -73,7 +73,6 @@ check_permissions(permission, payload) method
     return true otherwise
 '''
 def check_permissions(permission, payload):
-    print('check_permissions - start')
     if 'permissions' not in payload:
         raise AuthError({
             'code': 'invalid_claims',
@@ -121,12 +120,8 @@ def get_public_key(jwks_url, kid):
 
     # Find the public key associated with the given 'kid' (Key ID)
     for key in jwks_data['keys']:
-        print('key[kid]: ' + key['kid'])
-        print(f'kid: {kid}')
         if key['kid'].strip() == kid.strip():
-            print(f'key: {key}')
             key_type = key.get('kty')
-            print(f'key_type: {key_type}')
             return jwk_to_pem(key)
 
     return None

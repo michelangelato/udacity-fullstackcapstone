@@ -300,6 +300,11 @@ python app.py
 
 Import on Postman the file `udacity-cinema.postman_collection.json` to test all endpoints with different profiles.
 
+To run unit tests instead just run:
+```bash
+python tests.py
+```
+
 ## Flask Migrations
 
 * init database

@@ -72,12 +72,21 @@ def create_app(test_config=None):
     @app.route('/actors', methods=['POST'])
     @requires_auth('post:actors')
     def post_actors():
+        # get body
+        body = request.get_json()
+        if body is None:
+            abort(422)
+        
+        # check for mandatory parameters
+        missing_params = [
+            param for param in [
+                'firstname', 'lastname', 'birthdate'
+            ] if param not in body
+        ]
+        if missing_params:
+            abort(400, f'Bad Request - Missing required parameters: {", ".join(missing_params)}')
+
         try:
-            # get body
-            body = request.get_json()
-            if body is None:
-                abort(422)
-            
             # get body parameters
             firstname = body.get('firstname', None)
             lastname = body.get('lastname', None)
@@ -125,7 +134,7 @@ def create_app(test_config=None):
             if 'stagename' in data:
                 actor.stagename = data['stagename']
             if 'gender' in data:
-                actor.gender = json.dumps(data['gender'])
+                actor.gender = data['gender']
 
             # commit the changes to the database
             actor.update()
@@ -211,12 +220,21 @@ def create_app(test_config=None):
     @app.route('/movies', methods=['POST'])
     @requires_auth('post:movies')
     def post_movies():
+        # get body
+        body = request.get_json()
+        if body is None:
+            abort(422)
+        
+        # check for mandatory parameters
+        missing_params = [
+            param for param in [
+                'title', 'year', 'duration'
+            ] if param not in body
+        ]
+        if missing_params:
+            abort(400, f'Bad Request - Missing required parameters: {", ".join(missing_params)}')
+
         try:
-            # get body
-            body = request.get_json()
-            if body is None:
-                abort(422)
-            
             # get body parameters
             title = body.get('title', None)
             genre = body.get('genre', None)
@@ -262,7 +280,7 @@ def create_app(test_config=None):
             if 'title' in data:
                 movie.title = data['title']
             if 'genre' in data:
-                movie.genre = json.dumps(data['genre'])
+                movie.genre = data['genre']
 
             # commit the changes to the database
             movie.update()
@@ -348,6 +366,16 @@ def create_app(test_config=None):
             'error': 404,
             'message': 'Not found'
         }), 404
+
+    # 405 Method Not Allowed
+    @app.errorhandler(405)
+    def method_not_allowed(error):
+        print(error)
+        return jsonify({
+            'success': False,
+            'error': 405,
+            'message': 'Method Not Allowed'
+        }), 405
 
     # 422 Error Handler
     @app.errorhandler(422)

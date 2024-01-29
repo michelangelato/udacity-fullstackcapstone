@@ -13,7 +13,9 @@
                 "FLASK_APP": "app.py",
                 "FLASK_DEBUG": "1",
                 "EXCITED": "true",
-                "DATABASE_URL": "postgresql://postgres@localhost:5432/cinema"
+                "DATABASE_URL": "postgresql://postgres@localhost:5432/cinema",
+                "AUTH0_DOMAIN": "michelangelomarani.eu.auth0.com",
+                "API_AUDIENCE": "cinema"
             },
             "args": [
                 "run",
